@@ -1,7 +1,7 @@
 local mod = {}
     local composer = require( "composer" )
 
-    -- mod.white = {1,1,1,1}
+    mod.white = {1,1,1,1}
     mod.black = {0,0,0,1}
 
     -- mod.lighterRed = {1,0.2,0.1}

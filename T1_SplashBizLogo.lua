@@ -2,7 +2,8 @@ local composer = require( "composer" )
 local scene = composer.newScene()
 
 local modAdmin = require( "modAdmin" )
-local modColor = require("modColor")
+local modLang = require( "modLanguage" )
+local modColor = require( "modColor" )
 
 function scene:create( event )
 	local sceneGroup = self.view
@@ -23,30 +24,36 @@ function scene:create( event )
 		imgLogo.x = display.contentCenterX
 		imgLogo.y = display.contentCenterY
 
-        local txtFooter = display.newText( modAdmin.optionsFooterText )
-        grpUI:insert(txtFooter)
-        txtFooter:setFillColor( unpack(modColor.black) )
 
+		local function buildFooter()
+			grpFooter = display.newGroup()
+			grpUI:insert( grpFooter )
 
+			local lblLoading = display.newText(modAdmin.optionsFooterText)
+			grpFooter:insert(lblLoading)
+			lblLoading:setFillColor( unpack(modColor.black) )
 
---		
---		if modAdmin.manufacturer() == "Amazon" then txtFooter.y = display.actualContentHeight-50 elseif modAdmin.manufacturer() == "samsung" then txtFooter.y = display.actualContentHeight-140 end
---		if modAdmin.model() == "iPhone" then txtFooter.y = display.actualContentHeight-130 elseif modAdmin.model() == "iPad" then footer.y = display.actualContentHeight-30 end
---		-- print(modAdmin.architectureInfo())
---		if modAdmin.architectureInfo() == "iPhone6" or modAdmin.architectureInfo() == "iPhone5" or modAdmin.architectureInfo() == "iPhone4" then txtFooter.y = display.actualContentHeight-80 end
-        
+			grpFooter.anchorChildren = true 
+			grpFooter.anchorX = 0.5
+			grpFooter.anchorY = 1 
+			grpFooter.x = display.contentCenterX
+			grpFooter.y = display.contentCenterY
+			grpFooter.y = grpFooter.y + (display.actualContentHeight/2) - 30
+
+			return true
+		end
+		buildFooter()
 
 
         return true
 	end
-
-    local function initialiseAppEnviroment()
-        print("need to initialise the entire app enviroment from the T1 splash screen")
-
-        return true
-	end
-
 	buildScene()
+
+	local function initialiseAppEnviroment()
+		-- language management
+		modLang.loadLanguage()
+
+	end
 	initialiseAppEnviroment()
 
 end
@@ -57,9 +64,13 @@ function scene:show( event )
 
 	if ( phase == "will" ) then
 
-
-
 	elseif ( phase == "did" ) then
+
+		local function gotoM1( event )
+			composer.gotoScene( "M1_MainMenu", { time=1000, effect="crossFade" } )
+		end
+		timer.performWithDelay( 1000, gotoM1 )
+
     end
 end
 
