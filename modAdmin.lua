@@ -31,11 +31,14 @@ local mod = {}
         align = "center",
     }
 
-    function mod.ListOfGames()
+    function mod.listOfGames()
+        print ("test")
         local arrGames = {
             "X01 Scorer",
             "Round The Clock",
-            "Cricket"
+            "Cricket",
+            "121",
+            "Hello World"
         }
         return arrGames
     end
